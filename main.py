@@ -2,50 +2,50 @@
 import pygame
 import time
 import random
-
-#Initializes all of the imported Pygame modules
+ 
+#Initializes all of the imported Pygame modules 
 pygame.init()
 
-# game window
-dis_width = 600
-dis_height  = 400
-dis = pygame.display.set_mode((dis_width, dis_width))
-pygame.display.set_caption('Setris')
-
-# colours
-blue = (0,0,255)
+# colours 
 white = (255, 255, 255)
-black = (0, 0, 0)
-red = (255, 0, 0)
 yellow = (255, 255, 102)
+black = (0, 0, 0)
+red = (213, 50, 80)
 green = (0, 255, 0)
+blue = (50, 153, 213)
 
-game_over = False
-
-# start location 
-x1 = dis_width/2
-y1 = dis_height/2
+# game window 
+dis_width = 600
+dis_height = 400
  
-snake_speed = 15
+dis = pygame.display.set_mode((dis_width, dis_height))
+pygame.display.set_caption('Setris')
+ 
+clock = pygame.time.Clock()
+ 
 snake_block = 10
-
+snake_speed = 15
+ 
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
  
-x1_change = 0
-y1_change = 0
  
-clock = pygame.time.Clock()
-
+def Your_score(score):
+    value = score_font.render("Your Score: " + str(score), True, yellow)
+    dis.blit(value, [0, 0])
+ 
+ 
  
 def my_snake(snake_block, snake_list):
     for x in snake_list:
-        pygame.draw.rect(dis, black, [x[0], x[1], snake_block, snake_block])
+        pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
+ 
  
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width / 6, dis_height / 3])
-
+ 
+ 
 def gameLoop():
     game_over = False
     game_close = False
@@ -65,9 +65,9 @@ def gameLoop():
     while not game_over:
  
         while game_close == True:
-            dis.fill(blue)
-            message("Game over! Press C to Play Again or Q to Quit", red)
- 
+            dis.fill(black)
+            message("Game Over! Press C to Play Again or Q to Quit", red)
+            Your_score(Length_of_snake - 1)
             pygame.display.update()
  
             for event in pygame.event.get():
@@ -99,7 +99,7 @@ def gameLoop():
             game_close = True
         x1 += x1_change
         y1 += y1_change
-        dis.fill(blue)
+        dis.fill(black)
         pygame.draw.rect(dis, green, [foodx, foody, snake_block, snake_block])
         snake_Head = []
         snake_Head.append(x1)
@@ -113,7 +113,7 @@ def gameLoop():
                 game_close = True
  
         my_snake(snake_block, snake_List)
- 
+        Your_score(Length_of_snake - 1)
  
         pygame.display.update()
  
